@@ -15,10 +15,10 @@ import java.util.List;
 
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
+//Query methods spring data jpa
+
     Patient findByName(String name);
-
     List<Patient> findByBirthDateOrEmail(LocalDate birthDate, String email);
-
     List<Patient> findByBirthDateAfter(LocalDate birthDate);
 
 //JPQL
@@ -38,3 +38,4 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     Page<Patient> findAllPatients(Pageable pageable);
 
 }
+
