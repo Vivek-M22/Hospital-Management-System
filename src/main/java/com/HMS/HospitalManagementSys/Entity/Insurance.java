@@ -22,10 +22,10 @@ public class Insurance {
     private String policyNumber;
 
     @Column(nullable = false, unique = true, length = 100)
-    private String providerName;
+    private String provider;
 
     @Column(nullable = false)
-    private LocalDate ValidUntil;
+    private LocalDate validUntil;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.web.util.pattern.PathPattern;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -21,6 +22,9 @@ public class Appointment {
 
     @Column(nullable = false)
     private LocalDate appointmentDate;
+
+    @Column(nullable = false)
+    private LocalDateTime appointmentTime;
 
     @Column(length = 50)
     private String reason;

@@ -3,10 +3,12 @@ package com.HMS.HospitalManagementSys.Repository;
 import com.HMS.HospitalManagementSys.Entity.Patient;
 import com.HMS.HospitalManagementSys.Entity.type.BloodGroupType;
 import com.HMS.HospitalManagementSys.dto.BloodGroupCountResponseEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -36,6 +38,18 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 //PAGINATION QUERY
     @Query(value = "select * from patient", nativeQuery = true)
     Page<Patient> findAllPatients(Pageable pageable);
+
+//N+1 optimization
+    @Transactional
+    @Modifying
+    @Query("UPDATE Patient p SET p.name = :name where p.id = :id")
+    int updateNameWithId(@Param("name") String name, @Param("id") Long id);
+
+
+    //    @Query("SELECT p FROM Patient p LEFT JOIN FETCH p.appointments a LEFT JOIN FETCH a.doctor")
+    @Query("SELECT p FROM Patient p LEFT JOIN FETCH p.appointments")
+    List<Patient> findAllPatientWithAppointment();
+
 
 }
 
